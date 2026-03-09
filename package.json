@@ -12,7 +12,7 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "build:gh-pages": "NEXT_PUBLIC_GITHUB_PAGES=true next build",
-    "export:gh-pages": "NEXT_PUBLIC_GITHUB_PAGES=true next build && node copy-static-assets.js && node fix-all-paths.js",
+    "export:gh-pages": "NEXT_PUBLIC_GITHUB_PAGES=true next build && node copy-static-assets.js && node fix-all-assets.js",
     "deploy": "npm run export:gh-pages && npm install --save-dev gh-pages && gh-pages -d out"
   },
   "dependencies": {

@@ -2,7 +2,7 @@
   "name": "Rome Itinerary",
   "short_name": "Rome Trip",
   "description": "5-day Rome leisurely sightseeing adventure",
-  "start_url": "/",
+  "start_url": "/rome/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#ec4899",

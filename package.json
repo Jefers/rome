@@ -10,7 +10,10 @@
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "build:gh-pages": "NEXT_PUBLIC_GITHUB_PAGES=true next build",
+    "export:gh-pages": "NEXT_PUBLIC_GITHUB_PAGES=true next build && next export",
+    "deploy": "npm run export:gh-pages && echo \"Add gh-pages package for deployment: npm install --save-dev gh-pages\""
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

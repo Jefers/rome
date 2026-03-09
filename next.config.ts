@@ -1,10 +1,14 @@
 import type { NextConfig } from "next";
 
+const isGithubPages = process.env.NEXT_PUBLIC_GITHUB_PAGES === 'true';
+
 const nextConfig: NextConfig = {
-  output: "standalone",
-  //basePath: '/rome',
-  //assetPrefix: '/rome/',
-  /* config options here */
+  output: isGithubPages ? 'export' : 'standalone',
+  basePath: isGithubPages ? '/rome' : '',
+  assetPrefix: isGithubPages ? '/rome' : '',
+  images: {
+    unoptimized: isGithubPages, // Required for static export
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

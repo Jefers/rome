@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { DayAccordion } from '@/components/DayAccordion';
 import { BottomNav, type ViewType } from '@/components/BottomNav';
-import ClientMapView from '@/components/ClientMapView';
+import { MapView } from '@/components/MapView';
 import { GalleryView } from '@/components/GalleryView';
 import { parseMarkdown, type ItineraryData } from '@/lib/markdownParser';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -176,7 +176,7 @@ export default function Home() {
 
         {activeView === 'map' && (
           <div className="h-[calc(100vh-180px)]">
-            <ClientMapView 
+            <MapView 
               isDark={isDark}
               onLocationClick={(location) => {
                 // Could show location details or navigate to itinerary

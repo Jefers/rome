@@ -28,7 +28,10 @@ if (fs.existsSync(manifestPath)) {
     console.log('Updated manifest.json with /rome/ prefix');
 }
 
-// 3. Fix HTML files
+// 3. Add CSP meta tag to allow Next.js scripts
+const cspMeta = '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'unsafe-inline\'; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data:; font-src \'self\'; connect-src \'self\';">';
+
+// 4. Fix HTML files
 // Read index.html
 const indexPath = path.join(outDir, 'index.html');
 if (!fs.existsSync(indexPath)) {
@@ -47,9 +50,15 @@ html = html.replace(/href="\/icon-(\d+)\.png"/g, 'href="/rome/icon-$1.png"');
 // Replace logo.svg path
 html = html.replace(/src="\/logo\.svg"/g, 'src="/rome/logo.svg"');
 
+// Add CSP meta tag
+html = html.replace(
+    /<meta name="viewport"[^>]*>/,
+    `$&\n${cspMeta}`
+);
+
 // Write updated HTML
 fs.writeFileSync(indexPath, html);
-console.log('Updated paths in index.html');
+console.log('Updated paths and added CSP to index.html');
 
 // Also update _not-found.html if it exists
 const notFoundPath = path.join(outDir, '_not-found.html');
@@ -58,8 +67,12 @@ if (fs.existsSync(notFoundPath)) {
     notFoundHtml = notFoundHtml.replace(/href="\/manifest\.json"/g, 'href="/rome/manifest.json"');
     notFoundHtml = notFoundHtml.replace(/href="\/icon-(\d+)\.png"/g, 'href="/rome/icon-$1.png"');
     notFoundHtml = notFoundHtml.replace(/src="\/logo\.svg"/g, 'src="/rome/logo.svg"');
+    notFoundHtml = notFoundHtml.replace(
+        /<meta name="viewport"[^>]*>/,
+        `$&\n${cspMeta}`
+    );
     fs.writeFileSync(notFoundPath, notFoundHtml);
-    console.log('Updated paths in _not-found.html');
+    console.log('Updated paths and added CSP to _not-found.html');
 }
 
 // Also update 404.html if it exists
@@ -69,8 +82,12 @@ if (fs.existsSync(fourOhFourPath)) {
     fourOhFourHtml = fourOhFourHtml.replace(/href="\/manifest\.json"/g, 'href="/rome/manifest.json"');
     fourOhFourHtml = fourOhFourHtml.replace(/href="\/icon-(\d+)\.png"/g, 'href="/rome/icon-$1.png"');
     fourOhFourHtml = fourOhFourHtml.replace(/src="\/logo\.svg"/g, 'src="/rome/logo.svg"');
+    fourOhFourHtml = fourOhFourHtml.replace(
+        /<meta name="viewport"[^>]*>/,
+        `$&\n${cspMeta}`
+    );
     fs.writeFileSync(fourOhFourPath, fourOhFourHtml);
-    console.log('Updated paths in 404.html');
+    console.log('Updated paths and added CSP to 404.html');
 }
 
 console.log('fix-deployment.js completed successfully');

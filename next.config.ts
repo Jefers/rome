@@ -4,7 +4,7 @@ const isGithubPages = process.env.NEXT_PUBLIC_GITHUB_PAGES === 'true';
 
 const nextConfig: NextConfig = {
   output: isGithubPages ? 'export' : 'standalone',
-  basePath: isGithubPages ? '/' : '',
+  basePath: isGithubPages ? '/rome' : '',
   //trailingSlash: true,
   images: {
     unoptimized: isGithubPages,

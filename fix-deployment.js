@@ -1,48 +1,46 @@
 const fs = require('fs');
 const path = require('path');
+const outDir = path.join(__dirname, 'out');
 
-console.log('🔧 Comprehensive path fix for GitHub Pages...');
+// 1. Create .nojekyll file (CRITICAL for GitHub Pages)
+fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
+console.log('Created .nojekyll file');
 
-const htmlFiles = ['index.html', '404.html', '_not-found.html'];
+// 2. Fix manifest path: '/manifest.json' → '/rome/manifest.json'
+// 3. Fix icon paths: '/icon-*.png' → '/rome/icon-*.png'
+// 4. Fix logo path: '/logo.svg' → '/rome/logo.svg'
 
-htmlFiles.forEach(filename => {
-    const filePath = path.join(__dirname, 'out', filename);
-    
-    if (!fs.existsSync(filePath)) {
-        console.log(`⚠️  ${filename} not found, skipping`);
-        return;
-    }
-    
-    let html = fs.readFileSync(filePath, 'utf8');
-    const original = html;
-    
-    // Fix ALL paths that start with /
-    // 1. Manifest
-    html = html.replace(/href=\s*['"]\/manifest\.json['"]/g, 'href="/rome/manifest.json"');
-    html = html.replace(/['"]\/manifest\.json['"]/g, '"/rome/manifest.json"');
-    
-    // 2. Icons
-    html = html.replace(/href=\s*['"]\/icon-(192|512)\.png['"]/g, 'href="/rome/icon-$1.png"');
-    html = html.replace(/['"]\/icon-(192|512)\.png['"]/g, '"/rome/icon-$1.png"');
-    
-    // 3. _next/static paths (comprehensive)
-    html = html.replace(/(['"\s])\/(_next\/static\/[^'"\s>]*)/g, '$1/rome/$2');
-    
-    // 4. Any other /_next/ paths
-    html = html.replace(/(['"\s])\/(_next\/[^'"\s>]*)/g, '$1/rome/$2');
-    
-    // 5. Inline script content
-    html = html.replace(/\/(_next\/[^'"\s>]*\.(js|css|woff2|png|jpg|jpeg|gif|svg))/g, '/rome/$1');
-    
-    // 6. JSON strings in scripts
-    html = html.replace(/\"\/(_next\/[^\"]*)\"/g, '\"/rome/$1\"');
-    
-    if (html !== original) {
-        fs.writeFileSync(filePath, html, 'utf8');
-        console.log(`✅ Fixed paths in ${filename}`);
-    } else {
-        console.log(`ℹ️  No changes needed for ${filename}`);
-    }
-});
+// Read index.html
+const indexPath = path.join(outDir, 'index.html');
+if (!fs.existsSync(indexPath)) {
+    console.error('index.html not found in out directory');
+    process.exit(1);
+}
 
-console.log('✅ Comprehensive fix complete!');
+let html = fs.readFileSync(indexPath, 'utf8');
+
+// Replace manifest.json path
+html = html.replace(/href="\/manifest\.json"/g, 'href="/rome/manifest.json"');
+
+// Replace icon paths
+html = html.replace(/href="\/icon-(\d+)\.png"/g, 'href="/rome/icon-$1.png"');
+
+// Replace logo.svg path
+html = html.replace(/src="\/logo\.svg"/g, 'src="/rome/logo.svg"');
+
+// Write updated HTML
+fs.writeFileSync(indexPath, html);
+console.log('Updated paths in index.html');
+
+// Also update _not-found.html if it exists
+const notFoundPath = path.join(outDir, '_not-found.html');
+if (fs.existsSync(notFoundPath)) {
+    let notFoundHtml = fs.readFileSync(notFoundPath, 'utf8');
+    notFoundHtml = notFoundHtml.replace(/href="\/manifest\.json"/g, 'href="/rome/manifest.json"');
+    notFoundHtml = notFoundHtml.replace(/href="\/icon-(\d+)\.png"/g, 'href="/rome/icon-$1.png"');
+    notFoundHtml = notFoundHtml.replace(/src="\/logo\.svg"/g, 'src="/rome/logo.svg"');
+    fs.writeFileSync(notFoundPath, notFoundHtml);
+    console.log('Updated paths in _not-found.html');
+}
+
+console.log('fix-deployment.js completed successfully');

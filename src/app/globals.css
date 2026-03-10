@@ -1,420 +1,69 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@custom-variant dark (&:is(.dark *));
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
 
-/* CSS Properties for animated gradient borders */
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  
-  /* Pink Theme Colors */
-  --color-theme-1: #ec4899;
-  --color-theme-2: #db2777;
-  --color-theme-3: #be185d;
-  --color-theme-4: #fce7f3;
-  
-  /* Glow Colors */
-  --color-glow-1: #ec4899;
-  --color-glow-2: #f472b6;
-  --color-glow-3: #db2777;
-  --color-glow-4: #fce7f3;
-}
-
-/* Light Mode - Pink Theme */
-:root {
-  --radius: 0.625rem;
-  --background: #ffffff;
-  --foreground: #1a1a1a;
-  --card: #f8f9fa;
-  --card-foreground: #1a1a1a;
-  --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #ec4899;
-  --primary-foreground: #ffffff;
-  --secondary: #f8f9fa;
-  --secondary-foreground: #1a1a1a;
-  --muted: #e9ecef;
-  --muted-foreground: #6c757d;
-  --accent: #fce7f3;
-  --accent-foreground: #be185d;
-  --destructive: #ef4444;
-  --border: rgba(0, 0, 0, 0.1);
-  --input: rgba(0, 0, 0, 0.1);
-  --ring: #ec4899;
-  --chart-1: #ec4899;
-  --chart-2: #f472b6;
-  --chart-3: #db2777;
-  --chart-4: #be185d;
-  --chart-5: #fce7f3;
-  --sidebar: #f8f9fa;
-  --sidebar-foreground: #1a1a1a;
-  --sidebar-primary: #ec4899;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #fce7f3;
-  --sidebar-accent-foreground: #be185d;
-  --sidebar-border: rgba(0, 0, 0, 0.1);
-  --sidebar-ring: #ec4899;
-  
-  /* Pink Theme Variables */
-  --theme-1: #ec4899;
-  --theme-2: #db2777;
-  --theme-3: #be185d;
-  --theme-4: #fce7f3;
-  
-  /* Glassmorphism */
-  --glass-bg: rgba(248, 249, 250, 0.7);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  
-  /* Glow Colors */
-  --glow-color-1: #ec4899;
-  --glow-color-2: #f472b6;
-  --glow-color-3: #db2777;
-  --glow-color-4: #fce7f3;
-  --border-radius-card: 16px;
-}
-
-/* Dark Mode - Pink Theme */
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --card: #1a1a1a;
-  --card-foreground: #ffffff;
-  --popover: #1a1a1a;
-  --popover-foreground: #ffffff;
-  --primary: #ec4899;
-  --primary-foreground: #ffffff;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #ffffff;
-  --muted: #2a2a2a;
-  --muted-foreground: #a0a0a0;
-  --accent: #be185d;
-  --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: #ec4899;
-  --chart-1: #ec4899;
-  --chart-2: #f472b6;
-  --chart-3: #db2777;
-  --chart-4: #be185d;
-  --chart-5: #fce7f3;
-  --sidebar: #1a1a1a;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #ec4899;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #be185d;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #ec4899;
-  
-  /* Pink Theme Variables */
-  --theme-1: #ec4899;
-  --theme-2: #db2777;
-  --theme-3: #be185d;
-  --theme-4: #fce7f3;
-  
-  /* Glassmorphism */
-  --glass-bg: rgba(26, 26, 26, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  
-  /* Glow Colors */
-  --glow-color-1: #ec4899;
-  --glow-color-2: #f472b6;
-  --glow-color-3: #db2777;
-  --glow-color-4: #fce7f3;
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
-    font-size: 16px; /* Prevents iOS zoom */
-  }
-}
-
-/* Glassmorphism Card */
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-card);
-}
-
-/* Glowing Border Animation */
-.card-glow-wrapper {
-  position: relative;
-  border-radius: calc(var(--border-radius-card) + 4px);
-  z-index: 0;
-}
-
-.card-glow-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  background: conic-gradient(
-    from var(--angle),
-    var(--glow-color-1),
-    var(--glow-color-2),
-    var(--glow-color-3),
-    var(--glow-color-4),
-    var(--glow-color-1)
-  );
-  border-radius: calc(var(--border-radius-card) + 4px);
-  animation: rotate 4s linear infinite;
-  filter: blur(20px);
-  opacity: 0.7;
-  z-index: -1;
-}
-
-.card-glow-wrapper::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  background: conic-gradient(
-    from var(--angle),
-    var(--glow-color-1),
-    var(--glow-color-2),
-    var(--glow-color-3),
-    var(--glow-color-4),
-    var(--glow-color-1)
-  );
-  border-radius: calc(var(--border-radius-card) + 4px);
-  animation: rotate 4s linear infinite;
-  z-index: -1;
-}
-
-@keyframes rotate {
-  from {
-    --angle: 0deg;
-  }
-  to {
-    --angle: 360deg;
-  }
-}
-
-/* Step Highlight Effect */
-.step-highlighted {
-  position: relative;
-  border: 2px solid var(--theme-1) !important;
-  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px rgba(236, 72, 153, 0.5); 
-  }
-  50% { 
-    box-shadow: 0 0 30px rgba(236, 72, 153, 0.8); 
-  }
-}
-
-/* Theme Toggle Animation */
-.theme-toggle-container {
-  position: relative;
-  width: 56px;
-  height: 56px;
-  cursor: pointer;
-}
-
-.sun-icon,
-.moon-icon {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.sun-icon {
-  transform: scale(1) rotate(0deg);
-}
-
-.moon-icon {
-  transform: scale(0) rotate(-90deg);
-}
-
-.dark .sun-icon {
-  transform: scale(0) rotate(90deg);
-}
-
-.dark .moon-icon {
-  transform: scale(1) rotate(0deg);
-}
-
-/* Sun rays animation */
-.sun-ray {
-  transform-origin: center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.dark .sun-ray {
-  transform: scaleY(0);
-}
-
-/* Bottom Navigation Safe Area */
-.bottom-nav {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-/* Custom Scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(236, 72, 153, 0.3);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(236, 72, 153, 0.5);
-}
-
-/* Leaflet Map Customization */
-.leaflet-container {
-  background: var(--background);
-}
-
-.leaflet-tile-pane {
-  filter: saturate(1.2);
-}
-
-.dark .leaflet-tile-pane {
-  filter: saturate(1.2) brightness(0.8) contrast(1.1);
-}
-
-.leaflet-popup-content-wrapper {
-  background: var(--glass-bg) !important;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px !important;
-  color: var(--foreground);
-}
-
-.leaflet-popup-tip {
-  background: var(--glass-bg);
-}
-
-/* Touch-friendly targets */
-.touch-target {
-  min-height: 44px;
-  min-width: 44px;
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Pull to refresh feel */
-.pull-to-refresh {
-  overscroll-behavior-y: contain;
-}
-
-/* Animation for fade in */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Animation for slide up */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.slide-up {
-  animation: slideUp 0.4s ease-out;
-}
-
-/* Masonry Grid for Gallery */
-.masonry-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-@media (min-width: 640px) {
-  .masonry-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.masonry-item {
-  break-inside: avoid;
-  margin-bottom: 8px;
-}
-
-/* PWA Status Bar */
-@supports (padding-top: env(safe-area-inset-top)) {
-  .pwa-top-safe-area {
-    padding-top: env(safe-area-inset-top);
   }
 }

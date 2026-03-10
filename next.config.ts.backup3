@@ -1,0 +1,31 @@
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  // GitHub Pages configuration
+  // When NEXT_PUBLIC_GITHUB_PAGES=true, use /rome as base path
+  basePath: process.env.NEXT_PUBLIC_GITHUB_PAGES ? '/rome' : '',
+  
+  // Static export for GitHub Pages
+  output: 'export',
+  
+  // Important for GitHub Pages routing
+  trailingSlash: true,
+  
+  // Image optimization for static export
+  images: {
+    unoptimized: true,
+  },
+  
+  // Disable during build for static export
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
+  // Note: Do NOT set assetPrefix when using basePath with static export
+  // Next.js automatically handles asset paths with basePath
+};
+
+export default nextConfig;

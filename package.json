@@ -9,7 +9,7 @@
     "lint": "next lint",
     "preview": "next build && next start",
     "export": "next build && next export",
-    "export:gh-pages": "NEXT_PUBLIC_GITHUB_PAGES=true next build && touch out/.nojekyll",
+    "export:gh-pages": "NEXT_PUBLIC_GITHUB_PAGES=true next build && node fix-deployment.js",
     "deploy": "npm run export:gh-pages && npm install --save-dev gh-pages --legacy-peer-deps && gh-pages -d out",
     "postinstall": "prisma generate"
   },
